@@ -5,9 +5,11 @@
   --color-secondary: #a871fe;
   --color-personal: #ec4899;
   --color-shopping: #22c55e;
+  --color-all: #434c61;
   --color-important: #d08811;
   --color-urgent: #f37575;
   --color-high: #fbaa71;
   --color-medium: #f0cd62;
   --color-tag: #ccafff;
+  --color-active: #3c3c4d;
 }
