@@ -4,12 +4,10 @@ import Logo from "../ui/Logo";
 import {
   Calendar,
   ChevronRight,
-  Cross,
   Inbox,
   LayoutList,
   Plus,
   Star,
-  type LucideIcon,
 } from "lucide-react";
 import NavItem from "../ui/NavItem";
 import { useState } from "react";
