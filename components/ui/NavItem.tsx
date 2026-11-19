@@ -1,17 +1,6 @@
 "use client";
-import type { LucideIcon } from "lucide-react";
+import { NavItemProps } from "@/types/navigations";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-
-type IconColor = "text-primary" | "text-important" | "text-all";
-
-interface NavItemProps {
-  label: string;
-  icon: LucideIcon;
-  count: number;
-  href: string;
-  iconColor: IconColor;
-}
 
 export default function NavItem({
   label,
@@ -19,9 +8,8 @@ export default function NavItem({
   count,
   href,
   iconColor,
+  isActive,
 }: NavItemProps) {
-  const pathname = usePathname();
-  const isActive = pathname === href;
   return (
     <Link
       href={href}
