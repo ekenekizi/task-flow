@@ -1,6 +1,6 @@
 "use client";
 
-import Logo from "../ui/Logo";
+import Logo from "../ui/sidebar/Logo";
 import {
   Calendar,
   ChevronRight,
@@ -9,13 +9,13 @@ import {
   Plus,
   Star,
 } from "lucide-react";
-import NavItem from "../ui/NavItem";
+import NavItem from "../ui/sidebar/NavItem";
 import { useState } from "react";
-import ListItem from "../ui/ListItem";
+import ListItem from "../ui/sidebar/ListItem";
 import { NavItemTypes } from "@/types/navigations";
 import { ColorOptionType, ListItemType } from "@/types/myList";
 import { usePathname } from "next/navigation";
-import ListForm from "../ui/ListForm";
+import ListForm from "../ui/sidebar/ListForm";
 export default function SideBar() {
   const [isListOpen, setIsListOpen] = useState(false);
   const [showListMenu, setShowListMenu] = useState(false);
