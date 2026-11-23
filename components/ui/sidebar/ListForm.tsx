@@ -22,10 +22,14 @@ export default function ListForm({ colors, toggleListMenu }: ListFormProps) {
       </div>
 
       <div className="flex justify-between">
-        <button className="bg-secondary hover:bg-secondary/80 text-white w-25 rounded-lg">
+        <button
+          type="button"
+          className="bg-secondary hover:bg-secondary/80 text-white w-25 rounded-lg"
+        >
           Add
         </button>
         <button
+          type="button"
           onClick={toggleListMenu}
           className="w-25 text-gray-400 hover:text-white transition-all duration-200"
         >

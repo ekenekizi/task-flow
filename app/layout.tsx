@@ -25,12 +25,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full">
-        <div className="grid grid-cols-[300px_1fr] grid-rows-[150px_1fr]">
+      <body className="h-dvh overflow-hidden">
+        <div className="grid h-dvh grid-cols-[300px_1fr] grid-rows-[150px_minmax(0,1fr)] overflow-hidden">
           <SideBar />
 
           <Header />
-          <main className="bg-gray-50 p-8">{children}</main>
+          <main className="min-h-0 overflow-y-auto bg-gray-50 p-8">
+            {children}
+          </main>
         </div>
       </body>
     </html>

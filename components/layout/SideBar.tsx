@@ -19,7 +19,7 @@ export default function SideBar() {
   const pathname = usePathname();
 
   return (
-    <aside className="border col-start-1 col-end-2 h-screen row-start-1 row-end-3 bg-[#1a1a2e] ">
+    <aside className="border col-start-1 col-end-2  row-start-1 row-end-3 bg-[#1a1a2e] sticky top-0 h-dvh self-start overflow-y-auto ">
       <Logo />
 
       <nav className="border-y border-[#373749] p-2">
