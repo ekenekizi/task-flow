@@ -1,21 +1,14 @@
 "use client";
 
 import Logo from "../ui/sidebar/Logo";
-import {
-  Calendar,
-  ChevronRight,
-  Inbox,
-  LayoutList,
-  Plus,
-  Star,
-} from "lucide-react";
+import { ChevronRight, Plus } from "lucide-react";
+import { colors, navItems, listItems } from "@/config/navigation";
 import NavItem from "../ui/sidebar/NavItem";
 import { useState } from "react";
-import ListItem from "../ui/sidebar/ListItem";
-import { NavItemTypes } from "@/types/navigations";
-import { ColorOptionType, ListItemType } from "@/types/myList";
+
 import { usePathname } from "next/navigation";
 import ListForm from "../ui/sidebar/ListForm";
+import ListItem from "../ui/sidebar/ListItem";
 export default function SideBar() {
   const [isListOpen, setIsListOpen] = useState(false);
   const [showListMenu, setShowListMenu] = useState(false);
@@ -25,73 +18,6 @@ export default function SideBar() {
   }
   const pathname = usePathname();
 
-  const colors: ColorOptionType[] = [
-    { name: "Indigo", value: "#6366F1" },
-    { name: "Purple", value: "#9333EA" },
-    { name: "Pink", value: "#EC4899" },
-    { name: "Red", value: "#EF4444" },
-    { name: "Orange", value: "#F97316" },
-    { name: "Yellow", value: "#EAB308" },
-    { name: "Green", value: "#22C55E" },
-    { name: "Teal", value: "#14B8A6" },
-    { name: "Blue", value: "#3B82F6" },
-    { name: "Cyan", value: "#06B6D4" },
-  ];
-
-  const listItem: ListItemType[] = [
-    {
-      id: "work",
-      label: "Work",
-      colorTag: colors[0].value,
-      href: "/list/work",
-      count: 4,
-    },
-    {
-      id: "personal",
-      label: "Personal",
-      colorTag: colors[2].value,
-      href: "/list/personal",
-      count: 3,
-    },
-    {
-      id: "shopping",
-      label: "Shopping",
-      colorTag: colors[6].value,
-      href: "/list/shopping",
-      count: 1,
-    },
-  ];
-
-  const navItems: NavItemTypes[] = [
-    {
-      label: "Inbox",
-      href: "/",
-      count: 0,
-      icon: Inbox,
-      iconColor: "text-primary",
-    },
-    {
-      label: "Today",
-      href: "/today",
-      count: 3,
-      icon: Calendar,
-      iconColor: "text-primary",
-    },
-    {
-      label: "Important",
-      href: "/important",
-      count: 4,
-      icon: Star,
-      iconColor: "text-important",
-    },
-    {
-      label: "All Tasks",
-      href: "/all",
-      count: 8,
-      icon: LayoutList,
-      iconColor: "text-all",
-    },
-  ];
   return (
     <aside className="border col-start-1 col-end-2 h-screen row-start-1 row-end-3 bg-[#1a1a2e] ">
       <Logo />
@@ -128,7 +54,7 @@ export default function SideBar() {
 
         <nav>
           <ul className="flex flex-col gap-2">
-            {listItem.map((item) => (
+            {listItems.map((item) => (
               <ListItem
                 key={item.label}
                 label={item.label}

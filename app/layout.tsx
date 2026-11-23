@@ -26,11 +26,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full">
-        <div className="grid grid-cols-[300px_1fr] grid-rows-[100px_1fr]">
+        <div className="grid grid-cols-[300px_1fr] grid-rows-[150px_1fr]">
           <SideBar />
 
           <Header />
-          <main>{children}</main>
+          <main className="bg-gray-50 p-8">{children}</main>
         </div>
       </body>
     </html>
