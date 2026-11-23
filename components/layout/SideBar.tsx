@@ -52,27 +52,29 @@ export default function SideBar() {
           <h2>MY LIST</h2>
         </button>
 
-        <nav>
-          <ul className="flex flex-col gap-2">
-            {listItems.map((item) => (
-              <ListItem
-                key={item.label}
-                label={item.label}
-                colorTag={item.colorTag}
-                href={item.href}
-                count={item.count}
-                isActive={pathname === item.href}
-              />
-            ))}
-          </ul>
-        </nav>
+        {isListOpen && (
+          <nav>
+            <ul className="flex flex-col gap-2">
+              {listItems.map((item) => (
+                <ListItem
+                  key={item.label}
+                  label={item.label}
+                  colorTag={item.colorTag}
+                  href={item.href}
+                  count={item.count}
+                  isActive={pathname === item.href}
+                />
+              ))}
+            </ul>
+          </nav>
+        )}
 
         {showListMenu || (
           <button
             className="text-gray-500 flex items-center gap-1 py-2 px-1 rounded-md hover:bg-active/40 transition-all duration-200 w-full hover:text-gray-300"
             onClick={toggleListMenu}
           >
-            <Plus />
+            <Plus size={20} />
             <p>New list</p>
           </button>
         )}
