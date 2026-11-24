@@ -20,10 +20,6 @@ export default function PageHeader() {
         />
       )}
 
-      <div className="flex items-center justify-center hover:bg-gray-100 transition-colors duration-200 size-9 rounded-lg lg:hidden">
-        <Menu size={18} className="text-gray-500" />
-      </div>
-
       <h1 className="text-2xl font-semibold">
         {currentPage?.label ?? "Tasks"}
       </h1>

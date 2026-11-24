@@ -13,6 +13,7 @@ export interface ColorOptionType {
 
 export interface ListItemProps extends Omit<ListItemType, "id"> {
   isActive: boolean;
+  onClick: () => void;
 }
 
 export interface ListFormProps {

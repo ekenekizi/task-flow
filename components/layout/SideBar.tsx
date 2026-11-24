@@ -1,7 +1,7 @@
 "use client";
 
 import Logo from "../ui/sidebar/Logo";
-import { ChevronRight, Plus } from "lucide-react";
+import { ChevronRight, Plus, X } from "lucide-react";
 import { colors, navItems, listItems } from "@/config/navigation";
 import NavItem from "../ui/sidebar/NavItem";
 import { useState } from "react";
@@ -9,7 +9,12 @@ import { useState } from "react";
 import { usePathname } from "next/navigation";
 import ListForm from "../ui/sidebar/ListForm";
 import ListItem from "../ui/sidebar/ListItem";
-export default function SideBar() {
+
+interface SideBarProps {
+  isMobileMenuOpen: boolean;
+  onClose: () => void;
+}
+export default function SideBar({ isMobileMenuOpen, onClose }: SideBarProps) {
   const [isListOpen, setIsListOpen] = useState(false);
   const [showListMenu, setShowListMenu] = useState(false);
 
@@ -19,7 +24,26 @@ export default function SideBar() {
   const pathname = usePathname();
 
   return (
-    <aside className="border col-start-1 col-end-2  row-start-1 row-end-3 bg-[#1a1a2e] sticky top-0 h-dvh self-start overflow-y-auto ">
+    <aside
+      className={`
+    fixed inset-y-0 left-0 z-50
+    w-75 max-w-[85vw]
+    overflow-y-auto border bg-[#1a1a2e]
+    transition-transform duration-300 ease-in-out
+    ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"}
+    md:static md:col-start-1 md:row-start-1 md:row-end-3
+    md:block md:h-dvh md:w-auto md:max-w-none
+    md:translate-x-0
+  `}
+    >
+      <button
+        type="button"
+        onClick={onClose}
+        aria-label="Close navigation menu"
+        className="absolute right-3 top-3 rounded-md p-2 text-gray-400 hover:bg-white/10 hover:text-white md:hidden"
+      >
+        <X size={20} />
+      </button>
       <Logo />
 
       <nav className="border-y border-[#373749] p-2">
@@ -33,6 +57,7 @@ export default function SideBar() {
                 icon={item.icon}
                 iconColor={item.iconColor}
                 isActive={pathname === item.href}
+                onClick={onClose}
               />
             </li>
           ))}
@@ -63,6 +88,7 @@ export default function SideBar() {
                   href={item.href}
                   count={item.count}
                   isActive={pathname === item.href}
+                  onClick={onClose}
                 />
               ))}
             </ul>

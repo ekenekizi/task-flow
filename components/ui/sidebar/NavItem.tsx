@@ -9,10 +9,12 @@ export default function NavItem({
   href,
   iconColor,
   isActive,
+  onClick,
 }: NavItemProps) {
   return (
     <Link
       href={href}
+      onClick={onClick}
       className={`flex justify-between items-center group transition-all duration-200 px-4 py-2  rounded-lg ${isActive ? "bg-active text-white" : "text-gray-400 hover:bg-active/40 hover:text-gray-300"}`}
     >
       <div className="flex items-center gap-2">

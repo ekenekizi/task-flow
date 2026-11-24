@@ -8,11 +8,13 @@ export default function ListItem({
   href,
   count,
   isActive,
+  onClick,
 }: ListItemProps) {
   return (
     <li className="flex justify-between  items-center group">
       <Link
         href={href}
+        onClick={onClick}
         className={`text-gray-400 flex justify-between items-center py-2 px-3 w-[90%] rounded-lg transition-all duration-200 ${
           isActive
             ? "bg-active text-white"
