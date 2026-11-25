@@ -1,3 +1,5 @@
+import TaskView from "@/components/tasks/TaskView";
+
 export default function AllTaskPage() {
-  return <div>All task</div>;
+  return <TaskView view={"all"} />;
 }

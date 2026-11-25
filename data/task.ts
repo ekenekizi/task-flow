@@ -1,5 +1,5 @@
 import type { Task } from "@/types/task";
-const today = new Date().toISOString().slice(0, 10);
+export const today = new Date().toISOString().slice(0, 10);
 
 const tomorrow = new Date(Date.now() + 24 * 60 * 60 * 1000)
   .toISOString()

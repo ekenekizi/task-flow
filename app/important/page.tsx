@@ -1,3 +1,5 @@
+import TaskView from "@/components/tasks/TaskView";
+
 export default function ImportantPage() {
-  return <div>Important</div>;
+  return <TaskView view={"important"} />;
 }

@@ -1,3 +1,5 @@
+import TaskView from "@/components/tasks/TaskView";
+
 export default function TodayPage() {
-  return <div>Today</div>;
+  return <TaskView view="today" />;
 }

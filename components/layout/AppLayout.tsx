@@ -1,38 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, Suspense } from "react";
+import { useTaskStore } from "@/stores/task-store";
 import SideBar from "./SideBar";
 import Header from "./Header";
-import { listItems } from "@/config/navigation";
-import type { ListItemType } from "@/types/myList";
-import { tasks } from "@/data/task";
-
-function canDeleteList(id: string) {
-  return !tasks.some((task) => task.listId === id);
-}
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const lists = useTaskStore((state) => state.lists);
+  const tasks = useTaskStore((state) => state.tasks);
+  const initializeTasks = useTaskStore((state) => state.initializeTasks);
+  const addList = useTaskStore((state) => state.addList);
+  const deleteEmptyList = useTaskStore((state) => state.deleteEmptyList);
 
-  const [lists, setLists] = useState<ListItemType[]>(listItems);
+  useEffect(() => {
+    initializeTasks();
+  }, [initializeTasks]);
 
-  function handleAddList(label: string, colorTag: string) {
-    const id = crypto.randomUUID();
-
-    const newList: ListItemType = {
-      id,
-      label,
-      colorTag,
-      href: `/list/${id}`,
-      count: 0,
-    };
-
-    setLists((currentList) => [...currentList, newList]);
-  }
-
-  function handleDeleteList(id: string) {
-    if (!canDeleteList(id)) return;
-    setLists((currentLists) => currentLists.filter((list) => list.id !== id));
+  function canDeleteList(id: string) {
+    return tasks !== null && !tasks.some((task) => task.listId === id);
   }
 
   function openMobileMenu() {
@@ -53,14 +39,16 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           className="fixed inset-0 z-40 bg-black/50 md:hidden"
         />
       )}
-      <SideBar
-        isMobileMenuOpen={isMobileMenuOpen}
-        onClose={closeMobileMenu}
-        lists={lists}
-        onAddList={handleAddList}
-        canDeleteList={canDeleteList}
-        onDeleteList={handleDeleteList}
-      />
+      <Suspense fallback={null}>
+        <SideBar
+          isMobileMenuOpen={isMobileMenuOpen}
+          onClose={closeMobileMenu}
+          lists={lists}
+          onAddList={addList}
+          canDeleteList={canDeleteList}
+          onDeleteList={deleteEmptyList}
+        />
+      </Suspense>
 
       <Header onMenuClick={openMobileMenu} lists={lists} />
 

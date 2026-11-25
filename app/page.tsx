@@ -1,6 +1,5 @@
-import { tasks } from "@/data/task";
-import TaskList from "@/components/tasks/TaskList";
+import TaskView from "@/components/tasks/TaskView";
 
 export default function HomePage() {
-  return <TaskList tasks={tasks} />;
+  return <TaskView view="inbox" />;
 }

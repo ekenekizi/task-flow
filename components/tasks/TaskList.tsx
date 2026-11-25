@@ -1,11 +1,13 @@
 import { Task } from "@/types/task";
 import TaskCard from "./TaskCard";
+import type { ListItemType } from "@/types/myList";
 
 interface TaskListProps {
   tasks: Task[];
+  lists: ListItemType[];
 }
 
-export default function TaskList({ tasks }: TaskListProps) {
+export default function TaskList({ tasks, lists }: TaskListProps) {
   if (tasks.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-16 text-center">
@@ -20,9 +22,18 @@ export default function TaskList({ tasks }: TaskListProps) {
 
   return (
     <div className="space-y-3">
-      {tasks.map((task) => (
-        <TaskCard key={task.id} task={task} />
-      ))}
+      {tasks.map((task) => {
+        const list = lists.find((item) => item.id === task.listId);
+
+        return (
+          <TaskCard
+            key={task.id}
+            task={task}
+            listName={list?.label}
+            listColor={list?.colorTag}
+          />
+        );
+      })}
     </div>
   );
 }

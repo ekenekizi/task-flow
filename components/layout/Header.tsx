@@ -5,6 +5,7 @@ import SearchBar from "../ui/header/SearchBar";
 import SortDropdown from "../ui/header/SortDropdown";
 import TaskStatusFilter from "../ui/header/TaskStatusFilter";
 import type { ListItemType } from "@/types/myList";
+import { Suspense } from "react";
 
 interface HeaderProps {
   onMenuClick: () => void;
@@ -25,8 +26,11 @@ export default function Header({ onMenuClick, lists }: HeaderProps) {
           >
             <Menu size={22} />
           </button>
-
-          <PageHeader lists={lists} />
+          <Suspense
+            fallback={<h1 className="text-2xl font-semibold"> Tasks</h1>}
+          >
+            <PageHeader lists={lists} />
+          </Suspense>
         </div>
 
         <AddTaskBtn />
