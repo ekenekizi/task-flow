@@ -3,6 +3,8 @@
 import { navItems } from "@/config/navigation";
 import type { ListItemType } from "@/types/myList";
 import { usePathname } from "next/navigation";
+import { countActiveTasks } from "@/lib/task-views";
+import { useTaskStore } from "@/stores/task-store";
 
 interface PageHeaderProps {
   lists: ListItemType[];
@@ -10,10 +12,16 @@ interface PageHeaderProps {
 
 export default function PageHeader({ lists }: PageHeaderProps) {
   const pathname = usePathname();
-
+  const tasks = useTaskStore((state) => state.tasks);
   const currentPage = [...navItems, ...lists].find(
     (item) => item.href === pathname,
   );
+  const count = currentPage
+    ? countActiveTasks(
+        tasks,
+        "view" in currentPage ? currentPage.view : { listId: currentPage.id },
+      )
+    : 0;
 
   return (
     <div className="flex items-center gap-3">
@@ -29,8 +37,7 @@ export default function PageHeader({ lists }: PageHeaderProps) {
       </h1>
 
       <span className="text-sm text-gray-500">
-        {currentPage?.count ?? 0}{" "}
-        <span>{(currentPage?.count ?? 0) > 1 ? "tasks" : "task"}</span>
+        {count} {count === 1 ? "task" : "tasks"}
       </span>
     </div>
   );

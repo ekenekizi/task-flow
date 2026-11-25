@@ -1,10 +1,4 @@
-import {
-  Calendar,
-  Inbox,
-  LayoutList,
-  Star,
-  type LucideIcon,
-} from "lucide-react";
+import { Calendar, Inbox, LayoutList, Star } from "lucide-react";
 
 import type { NavItemTypes } from "@/types/navigations";
 import type { ColorOptionType, ListItemType } from "@/types/myList";
@@ -28,28 +22,28 @@ export const navItems: NavItemTypes[] = [
   {
     label: "Inbox",
     href: "/",
-    count: 0,
+    view: "inbox",
     icon: Inbox,
     iconColor: "text-primary",
   },
   {
     label: "Today",
     href: "/today",
-    count: 3,
+    view: "today",
     icon: Calendar,
     iconColor: "text-primary",
   },
   {
     label: "Important",
     href: "/important",
-    count: 4,
+    view: "important",
     icon: Star,
     iconColor: "text-important",
   },
   {
     label: "All Tasks",
     href: "/all",
-    count: 8,
+    view: "all",
     icon: LayoutList,
     iconColor: "text-all",
   },
@@ -62,20 +56,17 @@ export const listItems: ListItemType[] = [
     label: "Work",
     colorTag: colors[0].value,
     href: "/list/work",
-    count: 4,
   },
   {
     id: "personal",
     label: "Personal",
     colorTag: colors[2].value,
     href: "/list/personal",
-    count: 3,
   },
   {
     id: "shopping",
     label: "Shopping",
     colorTag: colors[6].value,
     href: "/list/shopping",
-    count: 1,
   },
 ];

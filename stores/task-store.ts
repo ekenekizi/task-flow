@@ -12,6 +12,8 @@ interface TaskStore {
   initializeTasks: () => void;
   addList: (label: string, colorTag: string) => void;
   deleteEmptyList: (id: string) => void;
+  toggleTask: (taskId: string) => void;
+  toggleSubtask: (taskId: string, subtaskId: string) => void;
 }
 
 export const useTaskStore = create<TaskStore>()((set) => ({
@@ -29,7 +31,6 @@ export const useTaskStore = create<TaskStore>()((set) => ({
       label,
       colorTag,
       href: `/list/${id}`,
-      count: 0,
     };
 
     set((state) => ({ lists: [...state.lists, newList] }));
@@ -45,5 +46,36 @@ export const useTaskStore = create<TaskStore>()((set) => ({
       }
 
       return { lists: state.lists.filter((list) => list.id !== id) };
+    }),
+
+  toggleTask: (taskId) =>
+    set((state) => {
+      if (state.tasks === null) return state;
+
+      return {
+        tasks: state.tasks.map((task) =>
+          task.id === taskId ? { ...task, completed: !task.completed } : task,
+        ),
+      };
+    }),
+
+  toggleSubtask: (taskId, subtaskId) =>
+    set((state) => {
+      if (state.tasks === null) return state;
+
+      return {
+        tasks: state.tasks.map((task) => {
+          if (task.id !== taskId) return task;
+
+          return {
+            ...task,
+            subtasks: task.subtasks.map((subtask) =>
+              subtask.id === subtaskId
+                ? { ...subtask, completed: !subtask.completed }
+                : subtask,
+            ),
+          };
+        }),
+      };
     }),
 }));

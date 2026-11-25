@@ -5,6 +5,8 @@ import { ChevronRight, Plus, X } from "lucide-react";
 import { colors, navItems } from "@/config/navigation";
 import NavItem from "../ui/sidebar/NavItem";
 import { useState } from "react";
+import { countActiveTasks } from "@/lib/task-views";
+import { useTaskStore } from "@/stores/task-store";
 
 import { usePathname, useRouter } from "next/navigation";
 import ListForm from "../ui/sidebar/ListForm";
@@ -27,8 +29,9 @@ export default function SideBar({
   canDeleteList,
   onDeleteList,
 }: SideBarProps) {
-  const [isListOpen, setIsListOpen] = useState(false);
+  const [isListOpen, setIsListOpen] = useState(true);
   const [showListMenu, setShowListMenu] = useState(false);
+  const tasks = useTaskStore((state) => state.tasks);
 
   function toggleListMenu() {
     setShowListMenu(!showListMenu);
@@ -83,7 +86,7 @@ export default function SideBar({
               <NavItem
                 label={item.label}
                 href={item.href}
-                count={item.count}
+                count={countActiveTasks(tasks, item.view)}
                 icon={item.icon}
                 iconColor={item.iconColor}
                 isActive={pathname === item.href}
@@ -116,7 +119,7 @@ export default function SideBar({
                   label={item.label}
                   colorTag={item.colorTag}
                   href={item.href}
-                  count={item.count}
+                  count={countActiveTasks(tasks, { listId: item.id })}
                   isActive={pathname === item.href}
                   onClick={onClose}
                   id={item.id}

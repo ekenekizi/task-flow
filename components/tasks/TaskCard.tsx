@@ -8,7 +8,7 @@ import {
   Flag,
   Tag,
 } from "lucide-react";
-
+import { useTaskStore } from "@/stores/task-store";
 import type { Task } from "@/types/task";
 
 interface TaskCardProps {
@@ -42,7 +42,8 @@ const priorityConfig = {
 
 export default function TaskCard({ task, listName, listColor }: TaskCardProps) {
   const [expanded, setExpanded] = useState(false);
-
+  const toggleTask = useTaskStore((state) => state.toggleTask);
+  const toggleSubtask = useTaskStore((state) => state.toggleSubtask);
   const priority = priorityConfig[task.priority];
 
   const completedSubtasks = task.subtasks.filter(
@@ -54,15 +55,16 @@ export default function TaskCard({ task, listName, listColor }: TaskCardProps) {
   return (
     <article className="rounded-xl border border-gray-200 bg-white p-4 transition-colors hover:border-violet-200">
       {/* Task heading */}
-      <div className="flex items-start gap-3">
-        {/* Completion indicator - visual only for now */}
-        <span
-          aria-hidden="true"
-          className={`mt-0.5 size-5 shrink-0 rounded-full border-2 ${
-            task.completed
-              ? "border-violet-600 bg-violet-600"
-              : "border-gray-300"
-          }`}
+      <div className="flex items-start gap-3 ">
+        <button
+          type="button"
+          aria-label={`Complete task ${task.title}`}
+          aria-pressed={task.completed}
+          onClick={() => toggleTask(task.id)}
+          className={`mt-0.5 size-5 shrink-0 rounded-full border-2 hover:border-violet-500 duration-300
+    focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-600 ${
+      task.completed ? "border-violet-600 bg-violet-600" : "border-gray-300"
+    }`}
         />
 
         {/* Task content */}
@@ -144,12 +146,15 @@ export default function TaskCard({ task, listName, listColor }: TaskCardProps) {
         <div className="ml-9 mt-4 space-y-3 border-l-2 border-gray-100 pl-4">
           {task.subtasks.map((subtask) => (
             <div key={subtask.id} className="flex items-center gap-2">
-              <span
-                className={`size-3.5 shrink-0 rounded border ${
-                  subtask.completed
-                    ? "border-violet-600 bg-violet-600"
-                    : "border-gray-300"
-                }`}
+              <button
+                type="button"
+                aria-label={`Complete subtask ${subtask.title}`}
+                aria-pressed={subtask.completed}
+                onClick={() => toggleSubtask(task.id, subtask.id)}
+                className={`size-3.5 shrink-0 rounded border
+    focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-600 ${
+      subtask.completed ? "border-violet-600 bg-violet-600" : "border-gray-300"
+    }`}
               />
 
               <span

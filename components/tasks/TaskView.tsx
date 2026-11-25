@@ -1,32 +1,8 @@
 "use client";
 
-import { today as mockToday } from "@/data/task";
 import { useTaskStore } from "@/stores/task-store";
-import type { Task } from "@/types/task";
 import TaskList from "./TaskList";
-
-type View = "inbox" | "today" | "important" | "all" | { listId: string };
-
-function selectTasks(tasks: Task[], view: View): Task[] {
-  if (typeof view === "object") {
-    return tasks.filter((task) => task.listId === view.listId);
-  }
-
-  switch (view) {
-    case "inbox":
-      return tasks.filter(
-        (task) => task.listId === "inbox" || task.listId === null,
-      );
-    case "today":
-      return tasks.filter((task) => task.dueDate === mockToday);
-    case "important":
-      return tasks.filter(
-        (task) => task.priority === "HIGH" || task.priority === "URGENT",
-      );
-    case "all":
-      return tasks;
-  }
-}
+import { selectTasks, type View } from "@/lib/task-views";
 
 export default function TaskView({ view }: { view: View }) {
   const tasks = useTaskStore((state) => state.tasks);

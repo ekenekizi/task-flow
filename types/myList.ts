@@ -3,7 +3,13 @@ export interface ListItemType {
   label: string;
   colorTag: string;
   href: string;
+}
+
+export interface ListItemProps extends ListItemType {
   count: number;
+  isActive: boolean;
+  onClick: () => void;
+  onDelete?: (id: string) => void;
 }
 
 export interface ColorOptionType {
@@ -15,10 +21,4 @@ export interface ListItemProps extends ListItemType {
   isActive: boolean;
   onClick: () => void;
   onDelete?: (id: string) => void;
-}
-
-export interface ListFormProps {
-  colors: ColorOptionType[];
-  toggleListMenu: () => void;
-  onAddList: (label: string, colorTag: string) => void;
 }
