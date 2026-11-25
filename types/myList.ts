@@ -11,12 +11,14 @@ export interface ColorOptionType {
   value: string;
 }
 
-export interface ListItemProps extends Omit<ListItemType, "id"> {
+export interface ListItemProps extends ListItemType {
   isActive: boolean;
   onClick: () => void;
+  onDelete?: (id: string) => void;
 }
 
 export interface ListFormProps {
   colors: ColorOptionType[];
   toggleListMenu: () => void;
+  onAddList: (label: string, colorTag: string) => void;
 }

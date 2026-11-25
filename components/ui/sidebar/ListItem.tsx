@@ -9,6 +9,8 @@ export default function ListItem({
   count,
   isActive,
   onClick,
+  id,
+  onDelete,
 }: ListItemProps) {
   return (
     <li className="flex justify-between  items-center group">
@@ -33,12 +35,20 @@ export default function ListItem({
         <p>{count}</p>
       </Link>
 
-      <div className="size-7 bg-transparent group/delete hover:bg-red-500/20 flex items-center justify-center rounded-md">
-        <Trash
-          size={16}
-          className="group-hover:text-gray-400 group-hover/delete:text-red-500 text-transparent transition-all duration-200"
-        />
-      </div>
+      {onDelete && (
+        <button
+          type="button"
+          aria-label={`Delete ${label}`}
+          onClick={() => onDelete(id)}
+          className="size-7 bg-transparent group/delete hover:bg-red-500/20 flex items-center justify-center rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400"
+        >
+          <Trash
+            size={16}
+            aria-hidden="true"
+            className="group-hover:text-gray-400 group-hover/delete:text-red-500 text-transparent transition-all duration-200 group-focus-visible/delete:text-red-500"
+          />
+        </button>
+      )}
     </li>
   );
 }

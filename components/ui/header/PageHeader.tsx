@@ -1,13 +1,17 @@
 "use client";
 
-import { listItems, navItems } from "@/config/navigation";
-import { Menu } from "lucide-react";
+import { navItems } from "@/config/navigation";
+import type { ListItemType } from "@/types/myList";
 import { usePathname } from "next/navigation";
 
-export default function PageHeader() {
+interface PageHeaderProps {
+  lists: ListItemType[];
+}
+
+export default function PageHeader({ lists }: PageHeaderProps) {
   const pathname = usePathname();
 
-  const currentPage = [...navItems, ...listItems].find(
+  const currentPage = [...navItems, ...lists].find(
     (item) => item.href === pathname,
   );
 

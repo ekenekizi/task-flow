@@ -4,12 +4,14 @@ import PageHeader from "../ui/header/PageHeader";
 import SearchBar from "../ui/header/SearchBar";
 import SortDropdown from "../ui/header/SortDropdown";
 import TaskStatusFilter from "../ui/header/TaskStatusFilter";
+import type { ListItemType } from "@/types/myList";
 
 interface HeaderProps {
   onMenuClick: () => void;
+  lists: ListItemType[];
 }
 
-export default function Header({ onMenuClick }: HeaderProps) {
+export default function Header({ onMenuClick, lists }: HeaderProps) {
   return (
     <header className="col-start-1 row-start-1 row-end-2 min-w-0 p-3 flex flex-col justify-between md:col-start-2 md:p-4">
       {/* top header */}
@@ -24,7 +26,7 @@ export default function Header({ onMenuClick }: HeaderProps) {
             <Menu size={22} />
           </button>
 
-          <PageHeader />
+          <PageHeader lists={lists} />
         </div>
 
         <AddTaskBtn />

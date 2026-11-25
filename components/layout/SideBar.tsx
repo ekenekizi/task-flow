@@ -2,26 +2,56 @@
 
 import Logo from "../ui/sidebar/Logo";
 import { ChevronRight, Plus, X } from "lucide-react";
-import { colors, navItems, listItems } from "@/config/navigation";
+import { colors, navItems } from "@/config/navigation";
 import NavItem from "../ui/sidebar/NavItem";
 import { useState } from "react";
 
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import ListForm from "../ui/sidebar/ListForm";
 import ListItem from "../ui/sidebar/ListItem";
+import type { ListItemType } from "@/types/myList";
 
 interface SideBarProps {
   isMobileMenuOpen: boolean;
   onClose: () => void;
+  lists: ListItemType[];
+  onAddList: (label: string, colorTag: string) => void;
+  canDeleteList: (id: string) => boolean;
+  onDeleteList: (id: string) => void;
 }
-export default function SideBar({ isMobileMenuOpen, onClose }: SideBarProps) {
+export default function SideBar({
+  isMobileMenuOpen,
+  onClose,
+  lists,
+  onAddList,
+  canDeleteList,
+  onDeleteList,
+}: SideBarProps) {
   const [isListOpen, setIsListOpen] = useState(false);
   const [showListMenu, setShowListMenu] = useState(false);
 
   function toggleListMenu() {
     setShowListMenu(!showListMenu);
   }
+
+  function handleAddList(label: string, colorTag: string) {
+    onAddList(label, colorTag);
+    setIsListOpen(true);
+    setShowListMenu(false);
+  }
   const pathname = usePathname();
+  const router = useRouter();
+
+  function handleDeleteList(id: string) {
+    const listToDelete = lists.find((list) => list.id === id);
+    if (!listToDelete || !canDeleteList(id)) return;
+
+    onDeleteList(id);
+
+    if (pathname === listToDelete.href) {
+      router.replace("/");
+    }
+  }
 
   return (
     <aside
@@ -80,15 +110,19 @@ export default function SideBar({ isMobileMenuOpen, onClose }: SideBarProps) {
         {isListOpen && (
           <nav>
             <ul className="flex flex-col gap-2">
-              {listItems.map((item) => (
+              {lists.map((item) => (
                 <ListItem
-                  key={item.label}
+                  key={item.id}
                   label={item.label}
                   colorTag={item.colorTag}
                   href={item.href}
                   count={item.count}
                   isActive={pathname === item.href}
                   onClick={onClose}
+                  id={item.id}
+                  onDelete={
+                    canDeleteList(item.id) ? handleDeleteList : undefined
+                  }
                 />
               ))}
             </ul>
@@ -105,7 +139,11 @@ export default function SideBar({ isMobileMenuOpen, onClose }: SideBarProps) {
           </button>
         )}
         {showListMenu && (
-          <ListForm toggleListMenu={toggleListMenu} colors={colors} />
+          <ListForm
+            toggleListMenu={toggleListMenu}
+            colors={colors}
+            onAddList={handleAddList}
+          />
         )}
       </div>
     </aside>
